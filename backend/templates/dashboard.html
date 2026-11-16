@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phishing Detection Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h1>🔐 Phishing Detection Dashboard</h1>
+
+<table id="logTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Email Content</th>
+            <th>Links</th>
+            <th>Verdict</th>
+            <th>Score</th>
+            <th>Reasons</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+fetch("/logs")
+    .then(response => response.json())
+    .then(data => {
+        const tbody = document.querySelector("#logTable tbody");
+
+        data.forEach(log => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${log.id}</td>
+                <td>${log.content}</td>
+                <td>${log.links}</td>
+                <td class="${log.verdict.toLowerCase()}">${log.verdict}</td>
+                <td>${log.score}</td>
+                <td>${log.reasons}</td>
+            `;
+
+            tbody.appendChild(row);
+        });
+    });
+</script>
+
+</body>
+</html>
