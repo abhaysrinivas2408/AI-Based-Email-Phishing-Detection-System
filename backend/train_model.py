@@ -40,7 +40,7 @@ def add_features(text):
     if "password" in text:
         features += " password_flag"
 
-    # 🔹 FIXED bank handling (less aggressive)
+    # bank handling 
     if "bank" in text:
         features += " bank_flag"
     if "account" in text:
@@ -104,7 +104,7 @@ data["label"] = data["label"].replace({
 data["label"] = pd.to_numeric(data["label"], errors="coerce")
 data.dropna(inplace=True)
 
-# ---------------- APPLY TEXT PROCESSING ----------------
+# ---------------- TEXT PROCESSING ----------------
 data["text"] = data["text"].apply(clean_text)
 data["text"] = data["text"].apply(add_features)
 
@@ -156,7 +156,7 @@ print("Testing samples:", X_test.shape[0])
 model = LogisticRegression(
     max_iter=3000,
     C=3.0,
-    class_weight="balanced"   # 🔥 reduces false positives
+    class_weight="balanced"   
 )
 
 model.fit(X_train, y_train)
